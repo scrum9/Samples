@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Entry Level Connect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
+        header {
+            background-color: rgb(27, 175, 224);
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        nav {
+            background-color: white;
+            color: white;
+            padding: 10px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #ebebeb;
+            color: rgb(8, 8, 8);
+            text-align: center;
+            padding: 10px;
+        }
+
+        .feed {
+            width: 70%;
+            margin: 20px auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feed-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Entry Level Connect</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">Companies</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <section class="feed">
+        <div class="feed-item">
+            <h2>Post Title 1</h2>
+            <p>This is the content of the first post.</p>
+        </div>
+        <div class="feed-item">
+            <h2>Post Title 2</h2>
+            <p>This is the content of the second post.</p>
+        </div>
+    </section>
+    <footer>
+    </footer>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('API LINK LinkedIn', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ACCESS TOKEN', 
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                const feed = document.querySelector('.feed');
+                data.elements.forEach(job => {
+                    const jobItem = document.createElement('div');
+                    jobItem.classList.add('feed-item');
+                    jobItem.innerHTML = `
+                        <h2>${job.title}</h2>
+                        <p>${job.descriptionSnippet}</p>
+                        <p>Company: ${job.companyName}</p>
+                        <p>Location: ${job.locationName}</p>
+                        <p>Posted: ${new Date(job.postedAt).toLocaleDateString()}</p>
+                    `;
+                    feed.appendChild(jobItem);
+                });
+            })
+            .catch(error => console.error(error));
+        });
+    </script>
+</body>
+</html>
